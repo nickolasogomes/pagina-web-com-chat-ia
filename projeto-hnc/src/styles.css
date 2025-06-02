@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@plugin "daisyui";
+
+@font-face {
+    font-family: 'Greyhound';
+    src: url('/src/assets/fonts/Greyhound.otf') format('otf'),
+        url('/src/assets/fonts/Greyhound.otf') format('otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Greyhound', sans-serif;
+}
