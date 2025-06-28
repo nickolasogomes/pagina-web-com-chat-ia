@@ -33,4 +33,46 @@
             </a>
         </div>
     </nav>
+
+    <aside class="container mx-auto sm:px-6 md:px-8 lg:px-0 max-w-md flex flex-col items-center justify-center">
+        <h6 class="footer-title self-start ml-10 sm:ml-6 md:ml-8">Não perca as novidades! Inscreva-se</h6>
+
+        <form #form="ngForm" (ngSubmit)="onSubmit(form)"
+            class="flex flex-col space-y-4 w-full max-w-sm p-2 rounded-lg shadow-lg">
+
+            <div class="join w-full flex flex-col">
+                <input type="text" name="name" [(ngModel)]="user.name" required minlength="2"
+                    class="input input-bordered w-full" placeholder="Nome" #name="ngModel" />
+                <span *ngIf="(name.invalid && (name.dirty || name.touched)) || (form.submitted && name.invalid)"
+                    class="text-red-600 text-sm mt-1">
+                    Nome deve ter pelo menos 2 letras.
+                </span>
+            </div>
+
+            <div class="join w-full flex flex-col">
+                <input type="email" name="email" [(ngModel)]="user.email" required class="input input-bordered w-full"
+                    placeholder="Email" #email="ngModel" />
+                <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-red-600 text-sm mt-1">
+                    Email inválido.
+                </span>
+            </div>
+
+            <div class="join w-full flex flex-col">
+                <input type="text" name="phone" [(ngModel)]="user.phone" required pattern="\(?\d{2}\)?\s?9\d{4}-\d{4}"
+                    class="input input-bordered w-full" placeholder="Telefone" #phone="ngModel" />
+                <span *ngIf="(phone.invalid && (phone.dirty || phone.touched)) || (form.submitted && phone.invalid)"
+                    class="text-red-600 text-sm mt-1">
+                    Telefone inválido. Ex: (11) 91234-5678
+                </span>
+            </div>
+
+            <button class="btn btn-sm rounded-full text-black bg-white self-center px-6" [disabled]="form.invalid">
+                Subscribe
+            </button>
+
+        </form>
+    </aside>
+
+
+
 </footer>
