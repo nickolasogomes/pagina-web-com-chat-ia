@@ -1,0 +1,57 @@
+<div class="fixed bottom-5 right-5 z-50">
+  <button (click)="toggleChat()" class="btn btn-circle shadow-lg text-white bg-stone-700 hover:bg-stone-800 border-none">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+    </svg>
+  </button>
+</div>
+
+<div *ngIf="isChatOpen" class="fixed bottom-20 right-5 w-96 h-[400px] bg-white shadow-xl rounded-lg flex flex-col z-40">
+
+  <div class="p-4 bg-stone-700 text-white rounded-t-lg flex justify-between items-center">
+    <div>
+      <h2 class="font-bold text-lg">Atendente HNC</h2>
+      <span class="text-sm opacity-80">Online</span>
+    </div>
+    <button (click)="toggleChat()" class="btn btn-sm btn-ghost btn-circle">✕</button>
+  </div>
+
+  <div class="flex-grow p-4 overflow-y-auto bg-gray-100">
+    <div *ngFor="let message of messages" class="chat" [ngClass]="{'chat-end': message.role === 'user', 'chat-start': message.role === 'model'}">
+      <div class="chat-header text-xs opacity-70 mb-1">
+        {{ message.role === 'user' ? 'Você' : 'Helena' }}
+        <time class="ml-1">{{ message.timestamp | date:'HH:mm' }}</time>
+      </div>
+      
+      <div class="chat-bubble" [ngClass]="{
+        'bg-stone-700 text-white': message.role === 'user',
+        'bg-white text-stone-700': message.role === 'model'
+      }">
+        {{ message.parts[0].text }}
+      </div>
+    </div>
+    
+    <div *ngIf="isLoading" class="chat chat-start">
+      <div class="chat-bubble bg-white text-stone-700">
+        <span class="loading loading-dots loading-md"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-4 bg-white border-t border-gray-200">
+    <form (ngSubmit)="sendMessage()">
+      <div class="join w-full">
+        <input
+          class="input input-sm input-bordered join-item w-full bg-white placeholder-gray-500 text-stone-700 border-stone-700 focus:border-stone-700 focus:outline-none focus:ring-0"
+          placeholder="Digite sua mensagem..."
+          [(ngModel)]="userInput"
+          [ngModelOptions]="{standalone: true}"
+          [disabled]="isLoading"
+        />
+        <button type="submit" class="btn btn-sm join-item text-white bg-stone-700 hover:bg-stone-800 border-none" [disabled]="isLoading || !userInput.trim()">
+          Enviar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
