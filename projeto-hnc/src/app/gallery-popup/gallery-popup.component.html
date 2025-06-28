@@ -1,0 +1,25 @@
+<div [hidden]="!isVisible" [ngClass]="{
+    'opacity-100 scale-100 pointer-events-auto': isVisible,
+    'opacity-0 scale-95 pointer-events-none': !isVisible
+  }" class="fixed inset-0 customBG flex items-center justify-center z-50 transition-all duration-300 ease-out"
+    (click)="onOverlayClick($event)">
+    <div
+        class="bg-amber-50 p-6 rounded-lg shadow-xl max-w-4xl w-full mx-4 relative overflow-hidden transition-all duration-300 ease-out transform">
+        <button class="absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-3xl font-bold"
+            (click)="closePopup()">
+            &times;
+        </button>
+
+        <h3 class="font-semibold mb-6 text-center leading-relaxed text-xl custom-text hover:text-black">
+            Galeria de Imagens
+        </h3>
+
+        <div class="grid grid-cols-3 gap-4 h-[calc(50vh-16rem)] md:h-[calc(100vh-18rem)] overflow-y-auto">
+            <!-- *ngFor -->
+            <div *ngFor="let image of images; let i = index" [ngClass]="{'col-span-2 row-span-2': i === 0}">
+                <img [src]="image" [alt]="'Imagem ' + (i + 1)"
+                    class="w-full h-full object-cover rounded-md shadow-md" />
+            </div>
+        </div>
+    </div>
+</div>
